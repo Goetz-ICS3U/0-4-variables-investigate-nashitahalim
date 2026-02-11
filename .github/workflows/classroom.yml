@@ -13,18 +13,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: test_var_investigate.py
-      id: test_var_investigate-py
-      uses: classroom-resources/autograding-command-grader@v1
+    - name: Variable Investigate Testing
+      id: variable-investigate-testing
+      uses: classroom-resources/autograding-python-grader@v1
       with:
-        test-name: test_var_investigate.py
-        setup-command: pip3 install pytest
-        command: python -m pytest
         timeout: 10
-        max-score: 4
+        setup-command: ''
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
-        TEST_VAR_INVESTIGATE-PY_RESULTS: "${{steps.test_var_investigate-py.outputs.result}}"
+        VARIABLE-INVESTIGATE-TESTING_RESULTS: "${{steps.variable-investigate-testing.outputs.result}}"
       with:
-        runners: test_var_investigate-py
+        runners: variable-investigate-testing
