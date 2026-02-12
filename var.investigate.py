@@ -1,6 +1,6 @@
 """
-author:
-date:
+author: Nashita Halim
+date: 12/2/26
 Investigating Variables
 """
 
