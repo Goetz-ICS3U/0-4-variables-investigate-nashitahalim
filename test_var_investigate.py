@@ -2,7 +2,6 @@ import re
 import sys
 import io
 
-
 def test_header_comments():
     """Test that student included author and date in header comments"""
     try:
@@ -26,12 +25,12 @@ def test_header_comments():
     author_match = re.search(r'author\s*:\s*(.+)', header, re.IGNORECASE)
     if author_match:
         author_value = author_match.group(1).strip()
-        assert author_value and author_value.lower() not in ['', 'mr. nguyen', 'student name'], \
+        assert author_value and author_value.lower() not in ['', 'mr. habib', 'student name'], \
             "Please fill in your actual name for 'author:' in the header"
 
 
 def test_var_count():
-    """Test that student added 3 new variables (14 total: 11 original + 3 new)"""
+    """Test that student added at least 3 new variables (minimum 14 total: 11 original + 3 new)"""
     try:
         with open("var_investigate.py", encoding="utf-8") as f:
             kids_code = f.read()
@@ -43,7 +42,7 @@ def test_var_count():
     # Filter out variables inside strings or comments
     # This is a simple check - students shouldn't have assignments in strings for this exercise
     
-    assert len(found) == 14, f"Expected 14 variables (11 original + 3 new), but found {len(found)} variables"
+    assert len(found) >= 14, f"Expected at least 14 variables (11 original + 3 new), but found {len(found)} variables"
 
 
 def test_story_changed(capsys):
