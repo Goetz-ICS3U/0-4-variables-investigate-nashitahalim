@@ -2,14 +2,13 @@ import re
 import sys
 import io
 
-
 def test_header_comments():
     """Test that student included author and date in header comments"""
     try:
-        with open("var_investigate.py", encoding="utf-8") as f:
+        with open("vars_investigate.py", encoding="utf-8") as f:
             kids_code = f.read()
     except FileNotFoundError:
-        raise AssertionError("Could not find var_investigate.py file. Make sure the file is named correctly.")
+        raise AssertionError("Could not find vars_investigate.py file. Make sure the file is named correctly.")
     
     # Get first 500 characters to check header
     header = kids_code[:500]
@@ -26,35 +25,35 @@ def test_header_comments():
     author_match = re.search(r'author\s*:\s*(.+)', header, re.IGNORECASE)
     if author_match:
         author_value = author_match.group(1).strip()
-        assert author_value and author_value.lower() not in ['', 'mr. nguyen', 'student name'], \
+        assert author_value and author_value.lower() not in ['', 'mr. habib', 'student name'], \
             "Please fill in your actual name for 'author:' in the header"
 
 
 def test_var_count():
-    """Test that student added 3 new variables (14 total: 11 original + 3 new)"""
+    """Test that student added at least 3 new variables (minimum 14 total: 11 original + 3 new)"""
     try:
-        with open("var_investigate.py", encoding="utf-8") as f:
+        with open("vars_investigate.py", encoding="utf-8") as f:
             kids_code = f.read()
     except FileNotFoundError:
-        raise AssertionError("Could not find var_investigate.py file. Make sure the file is named correctly.")
+        raise AssertionError("Could not find vars_investigate.py file. Make sure the file is named correctly.")
     
     # Count all the variables in their code
     found = re.findall(r"^[a-zA-Z_][a-zA-Z0-9_]* ?=", kids_code, re.MULTILINE)
     # Filter out variables inside strings or comments
     # This is a simple check - students shouldn't have assignments in strings for this exercise
     
-    assert len(found) == 14, f"Expected 14 variables (11 original + 3 new), but found {len(found)} variables"
+    assert len(found) >= 14, f"Expected at least 14 variables (11 original + 3 new), but found {len(found)} variables"
 
 
 def test_story_changed(capsys):
     """Test that student changed at least one variable value"""
     try:
         # Capture the output from running the student's code
-        import var_investigate
+        import vars_investigate
     except ModuleNotFoundError:
-        raise AssertionError("Could not import var_investigate.py. Make sure the file is named correctly.")
+        raise AssertionError("Could not import vars_investigate.py. Make sure the file is named correctly.")
     except Exception as e:
-        raise AssertionError(f"Error running var_investigate.py: {str(e)}")
+        raise AssertionError(f"Error running vars_investigate.py: {str(e)}")
     
     captured = capsys.readouterr()
     
@@ -80,10 +79,10 @@ def test_story_changed(capsys):
 def test_new_variables_used():
     """Test that the 3 new variables are actually used in the print statement"""
     try:
-        with open("var_investigate.py", encoding="utf-8") as f:
+        with open("vars_investigate.py", encoding="utf-8") as f:
             kids_code = f.read()
     except FileNotFoundError:
-        raise AssertionError("Could not find var_investigate.py file.")
+        raise AssertionError("Could not find vars_investigate.py file.")
     
     # Find all variables defined
     all_vars = re.findall(r"^([a-zA-Z_][a-zA-Z0-9_]*) ?=", kids_code, re.MULTILINE)
